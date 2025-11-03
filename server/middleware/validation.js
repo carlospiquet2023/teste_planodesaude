@@ -48,10 +48,8 @@ const authValidation = {
       .escape(),
     
     body('password')
-      .isLength({ min: 6, max: 100 })
-      .withMessage('Senha deve ter entre 6 e 100 caracteres')
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
-      .withMessage('Senha deve conter letras maiúsculas, minúsculas e números'),
+      .isLength({ min: 3, max: 100 })
+      .withMessage('Senha deve ter entre 3 e 100 caracteres'),
     
     validateRequest
   ],

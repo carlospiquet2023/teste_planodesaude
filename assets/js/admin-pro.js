@@ -16,35 +16,45 @@ let simulationsChart = null;
 // 🔐 AUTENTICAÇÃO
 // ============================================
 
-document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
     
-    const username = e.target.username.value;
-    const password = e.target.password.value;
-    
-    try {
-        const response = await fetch(`${API_URL}/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro HTTP: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (data.success && data.token) {
+                    sessionStorage.setItem('adminToken', data.token);
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    
+                    loadDashboard();
+                } else {
+                    showLoginError(data.error || data.message || 'Usuário ou senha incorretos!');
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                showLoginError('Erro ao conectar com o servidor. Verifique se o backend está rodando.');
+            }
         });
-
-        const data = await response.json();
-
-        if (data.success && data.token) {
-            sessionStorage.setItem('adminToken', data.token);
-            sessionStorage.setItem('adminLoggedIn', 'true');
-            
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-            
-            loadDashboard();
-        } else {
-            showLoginError(data.message || 'Usuário ou senha incorretos!');
-        }
-    } catch (error) {
-        console.error('Erro ao fazer login:', error);
-        showLoginError('Erro ao conectar com o servidor');
     }
 });
 
@@ -53,8 +63,11 @@ function showLoginError(message) {
     if (errorEl) {
         errorEl.textContent = message;
         errorEl.style.display = 'block';
-        setTimeout(() => errorEl.style.display = 'none', 5000);
+        setTimeout(() => {
+            errorEl.style.display = 'none';
+        }, 5000);
     } else {
+        console.error('Elemento errorMessage não encontrado');
         alert(message);
     }
 }
