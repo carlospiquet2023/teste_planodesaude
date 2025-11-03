@@ -1,1 +1,1 @@
-web: cd server && npm start
+web: cd server && npm install && npm run init-db && npm start

@@ -2,38 +2,47 @@
 
 Sistema completo de vendas com chat inteligente (IARA) para consultoria de planos de saúde.
 
-## 🚀 Deploy no Railway
+## 🚀 Deploy no Render
 
 ### Pré-requisitos
-- Conta no [Railway](https://railway.app/)
+
+- Conta no [Render](https://render.com/)
 - Conta no GitHub
 
 ### Passo a Passo
 
 1. **Fork ou Clone este repositório**
 
-2. **Acesse o Railway**
-   - Faça login em https://railway.app/
-   - Clique em "New Project"
-   - Selecione "Deploy from GitHub repo"
+2. **Acesse o Render**
+   - Faça login em https://render.com/
+   - Clique em "New +" > "Web Service"
+   - Conecte seu repositório GitHub
 
-3. **Conecte o Repositório**
-   - Autorize o Railway a acessar seu GitHub
-   - Selecione este repositório
+3. **Configure o Serviço**
+   
+   Configurações básicas:
+   ```
+   Name: vendaplano-backend
+   Region: Oregon (US West)
+   Branch: main
+   Runtime: Node
+   Build Command: cd server && npm install && npm run init-db
+   Start Command: cd server && npm start
+   ```
 
 4. **Configure as Variáveis de Ambiente**
    
-   No Railway, adicione as seguintes variáveis:
+   No Render, adicione as seguintes variáveis:
    
-   ```
+   ```bash
    NODE_ENV=production
-   PORT=3000
+   PORT=10000
    JWT_SECRET=SUA_CHAVE_SECRETA_AQUI_64_CARACTERES
    JWT_EXPIRE=24h
    ADMIN_USERNAME=admin
    ADMIN_PASSWORD=SuaSenhaSegura123!
    ADMIN_EMAIL=seu-email@exemplo.com
-   CORS_ORIGIN=https://seu-dominio.railway.app
+   CORS_ORIGIN=https://seu-app.onrender.com
    DB_PATH=./database/vendas.db
    ```
 
@@ -42,14 +51,20 @@ Sistema completo de vendas com chat inteligente (IARA) para consultoria de plano
    node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
    ```
 
-5. **Deploy Automático**
-   - O Railway detectará automaticamente a configuração
-   - O deploy iniciará automaticamente
-   - Aguarde a conclusão (2-3 minutos)
+5. **Configure Disco Persistente**
+   - Em "Disks", clique "Add Disk"
+   - Name: `vendaplano-db`
+   - Mount Path: `/opt/render/project/src/server/database`
+   - Size: 1 GB
 
-6. **Acesse sua Aplicação**
-   - O Railway fornecerá uma URL pública
-   - Formato: `https://seu-projeto.railway.app`
+6. **Deploy Automático**
+   - Clique em "Create Web Service"
+   - O Render iniciará o deploy automaticamente
+   - Aguarde a conclusão (3-5 minutos)
+
+7. **Acesse sua Aplicação**
+   - O Render fornecerá uma URL pública
+   - Formato: `https://seu-app.onrender.com`
 
 ## 📁 Estrutura do Projeto
 

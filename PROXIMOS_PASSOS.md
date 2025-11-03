@@ -1,187 +1,137 @@
-# ✅ PROJETO ENVIADO COM SUCESSO!
+# ✅ PROJETO CONFIGURADO PARA RENDER
 
 ## 📦 O que foi feito:
 
-### 1. ✅ Preparação para Railway
-- Criado `railway.json` - Configuração do Railway
-- Criado `nixpacks.toml` - Build configuration
-- Criado `Procfile` - Start command
-- Criado `package.json` raiz - Scripts de inicialização
-- Criado `README.md` - Documentação completa
-- Criado `RAILWAY_DEPLOY.md` - Guia detalhado de deploy
+### 1. ✅ Preparação para Render
+
+- Criado `render.yaml` - Configuração Blueprint do Render
+- Criado `start.sh` - Script de inicialização
+- Atualizado `Procfile` - Start command
+- Atualizado `package.json` - Scripts de build
+- Criado `README.md` - Documentação atualizada para Render
+- Criado `RENDER_DEPLOY.md` - Guia completo de deploy no Render
 
 ### 2. ✅ Repositório GitHub
-- Projeto enviado para: https://github.com/carlospiquet2023/teste_planodesaude.git
-- Branch principal: `main`
-- 55 arquivos commitados
-- Commit inicial com descrição completa
 
-## 🚀 PRÓXIMOS PASSOS:
+- Projeto: https://github.com/carlospiquet2023/teste_planodesaude.git
+- Branch: `main`
+- Configurado para deploy automático no Render
 
-### 1️⃣ Deploy no Railway (5 minutos)
+## 🚀 PRÓXIMOS PASSOS - DEPLOY NO RENDER:
 
-1. **Acesse o Railway:**
-   - Vá para: https://railway.app
-   - Faça login com GitHub
+### 1️⃣ Acesse o Render (2 minutos)
 
-2. **Crie Novo Projeto:**
-   - Clique em "New Project"
-   - Selecione "Deploy from GitHub repo"
-   - Escolha: `carlospiquet2023/teste_planodesaude`
+1. **Crie sua conta:**
+   - Vá para: https://render.com
+   - Clique em "Get Started"
+   - Faça login com GitHub (recomendado)
 
-3. **Configure Variáveis de Ambiente:**
-   
-   No Railway, clique em "Variables" e adicione:
+### 2️⃣ Crie o Web Service (3 minutos)
 
-   ```bash
-   NODE_ENV=production
-   PORT=3000
-   JWT_SECRET=GERE_UMA_CHAVE_FORTE_AQUI
-   JWT_EXPIRE=24h
-   ADMIN_USERNAME=admin
-   ADMIN_PASSWORD=SuaSenhaForte123!
-   ADMIN_EMAIL=seu-email@exemplo.com
-   CORS_ORIGIN=https://seu-projeto.railway.app
-   DB_PATH=./database/vendas.db
+1. **No Dashboard:**
+   - Clique em "New +" > "Web Service"
+   - Conecte: `carlospiquet2023/teste_planodesaude`
+
+2. **Configure:**
+   ```
+   Name: vendaplano-backend
+   Region: Oregon (US West)
+   Branch: main
+   Runtime: Node
+   Build Command: cd server && npm install && npm run init-db
+   Start Command: cd server && npm start
+   Instance Type: Free
    ```
 
-   **⚠️ Para gerar JWT_SECRET seguro:**
-   ```bash
-   node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
-   ```
-   Copie o resultado e use como JWT_SECRET
+### 3️⃣ Variáveis de Ambiente (2 minutos)
 
-4. **Deploy Automático:**
-   - O Railway detecta automaticamente a configuração
-   - Aguarde 2-3 minutos
-   - Pronto! Seu app estará online
+**Gere JWT_SECRET primeiro:**
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
 
-5. **Obtenha a URL:**
-   - Railway gera automaticamente: `https://seu-projeto.railway.app`
-   - Copie essa URL e atualize `CORS_ORIGIN`
+**Adicione no Render:**
+```bash
+NODE_ENV=production
+PORT=10000
+JWT_SECRET=cole_resultado_aqui
+JWT_EXPIRE=24h
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=Admin@2024!Strong
+ADMIN_EMAIL=seu@email.com
+CORS_ORIGIN=https://vendaplano-backend.onrender.com
+DB_PATH=./database/vendas.db
+```
 
-### 2️⃣ Primeiro Acesso
+### 4️⃣ Disco Persistente (1 minuto)
 
-1. **Acesse seu site:**
-   - URL fornecida pelo Railway
-   - Exemplo: `https://teste-planodesaude-production.railway.app`
+**IMPORTANTE** para banco de dados:
+```
+Name: vendaplano-db
+Mount Path: /opt/render/project/src/server/database
+Size: 1 GB
+```
 
-2. **Teste a API:**
-   ```bash
-   # Health check
-   curl https://sua-url.railway.app/api/health
-   ```
+### 5️⃣ Deploy! (3-5 minutos)
 
-3. **Login Admin:**
-   - Acesse: `https://sua-url.railway.app/admin`
-   - Use: username e password configurados
-   - **IMPORTANTE:** Mude a senha após primeiro login!
+- Clique em "Create Web Service"
+- Aguarde o deploy
+- Obtenha URL: `https://vendaplano-backend.onrender.com`
 
-### 3️⃣ Configuração Final
+### 6️⃣ Atualize CORS
 
-1. **Atualize CORS_ORIGIN:**
-   - Após obter URL do Railway
-   - Atualize a variável com a URL real
+- Environment > CORS_ORIGIN
+- Cole a URL gerada
+- Save Changes
 
-2. **Teste o Sistema:**
-   - ✅ Landing page funciona
-   - ✅ Chat IARA responde
-   - ✅ Simulador de planos
-   - ✅ Login admin funciona
-   - ✅ Dashboard carrega
+### 7️⃣ Teste
 
-3. **Segurança:**
-   - ✅ Troque senha admin
-   - ✅ Verifique JWT_SECRET está forte
-   - ✅ CORS configurado corretamente
+```bash
+# Health check
+curl https://vendaplano-backend.onrender.com/api/health
 
-## 📋 Checklist Deploy
+# Login admin
+curl -X POST https://vendaplano-backend.onrender.com/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"Admin@2024!Strong"}'
+```
 
-- [ ] Conta Railway criada
-- [ ] Repositório conectado
-- [ ] Variáveis de ambiente configuradas
-- [ ] JWT_SECRET gerado e configurado
-- [ ] Deploy concluído com sucesso
-- [ ] URL obtida
+## 📋 Checklist
+
+- [ ] Conta Render criada
+- [ ] Web Service criado
+- [ ] Variáveis configuradas
+- [ ] JWT_SECRET gerado
+- [ ] Disco persistente adicionado
+- [ ] Deploy concluído
 - [ ] CORS_ORIGIN atualizado
-- [ ] Site testado e funcionando
-- [ ] Admin login testado
-- [ ] Senha admin alterada
+- [ ] Testes passando
 
-## 🎯 URLs Importantes
+## 🎯 Links
 
 - **GitHub:** https://github.com/carlospiquet2023/teste_planodesaude
-- **Railway:** https://railway.app (faça login)
-- **Docs:** Ver `RAILWAY_DEPLOY.md` para guia completo
-
-## 📚 Documentação
-
-Todo o projeto está documentado:
-- `README.md` - Visão geral
-- `RAILWAY_DEPLOY.md` - Deploy detalhado
-- `doc/INICIO_RAPIDO.md` - Começar rápido
-- `doc/GUIA_BACKEND.md` - API completa
-- `doc/SEGURANCA_RESUMO.md` - Segurança
-
-## 🆘 Suporte
-
-**Se tiver problemas:**
-
-1. **Build falhou:**
-   ```bash
-   railway logs
-   ```
-
-2. **Variáveis não carregam:**
-   - Verifique se todas estão configuradas
-   - Restart: `railway restart`
-
-3. **Erro 500:**
-   - Verifique logs do Railway
-   - Confirme JWT_SECRET configurado
-
-4. **CORS error:**
-   - Atualize CORS_ORIGIN com URL correta
-   - Formato: `https://seu-projeto.railway.app` (sem barra final)
+- **Render:** https://render.com
+- **Docs:** Ver `RENDER_DEPLOY.md` para guia completo
 
 ## 💡 Dicas
 
-1. **Auto Deploy:** 
-   - Qualquer push no GitHub = deploy automático
-   - Desabilite em Settings se necessário
+**Plano Free:**
+- 750h/mês grátis
+- Hiberna após 15 min
+- Use UptimeRobot para manter ativo
 
-2. **Logs em Tempo Real:**
-   ```bash
-   railway logs --tail
-   ```
+**Próximos deploys:**
+```bash
+git add .
+git commit -m "update"
+git push origin main
+# Deploy automático!
+```
 
-3. **Comandos Úteis:**
-   ```bash
-   railway status          # Status do projeto
-   railway variables       # Ver variáveis
-   railway open           # Abrir no navegador
-   ```
+## 🆘 Suporte
 
-## 🎉 Parabéns!
-
-Seu projeto está pronto para produção!
-
-**Recursos do Sistema:**
-- ✅ Chat inteligente (IARA)
-- ✅ Simulador de planos
-- ✅ Dashboard administrativo
-- ✅ API REST completa
-- ✅ Segurança enterprise
-- ✅ Logs e monitoramento
+Ver `RENDER_DEPLOY.md` para troubleshooting completo.
 
 ---
 
-**Próximo Deploy:**
-```bash
-git add .
-git commit -m "feat: nova feature"
-git push origin main
-# Railway faz deploy automaticamente!
-```
-
-🚀 **Bora vender planos de saúde!**
+🚀 **Pronto para produção no Render!**
