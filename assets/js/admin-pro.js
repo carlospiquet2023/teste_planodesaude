@@ -35,8 +35,8 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
             sessionStorage.setItem('adminToken', data.token);
             sessionStorage.setItem('adminLoggedIn', 'true');
             
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
             
             loadDashboard();
         } else {
@@ -49,10 +49,14 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
 });
 
 function showLoginError(message) {
-    const errorEl = document.getElementById('loginError');
-    errorEl.textContent = message;
-    errorEl.style.display = 'block';
-    setTimeout(() => errorEl.style.display = 'none', 5000);
+    const errorEl = document.getElementById('errorMessage');
+    if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+        setTimeout(() => errorEl.style.display = 'none', 5000);
+    } else {
+        alert(message);
+    }
 }
 
 function logout() {
@@ -63,8 +67,8 @@ function logout() {
 // Verificar login
 window.addEventListener('load', () => {
     if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
         loadDashboard();
     }
 });
