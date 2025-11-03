@@ -9,7 +9,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 3000
+        value: 10000
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRE
@@ -23,7 +23,7 @@ services:
       - key: CORS_ORIGIN
         sync: false
       - key: DB_PATH
-        value: ./database/vendas.db
+        value: /opt/render/project/src/server/database/vendas.db
     disk:
       name: vendaplano-db
       mountPath: /opt/render/project/src/server/database
