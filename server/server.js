@@ -205,9 +205,41 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Inicializar banco de dados
+async function initDatabase() {
+  console.log('🔄 Verificando banco de dados...');
+  const { spawn } = require('child_process');
+  
+  return new Promise((resolve, reject) => {
+    const initDb = spawn('node', ['scripts/init-db.js'], {
+      cwd: __dirname,
+      stdio: 'inherit'
+    });
+    
+    initDb.on('close', (code) => {
+      if (code === 0) {
+        console.log('✅ Banco de dados verificado/inicializado!');
+        resolve();
+      } else {
+        console.error('⚠️ Aviso: Erro ao inicializar banco (tentando continuar...)');
+        resolve(); // Continua mesmo com erro
+      }
+    });
+    
+    initDb.on('error', (error) => {
+      console.error('⚠️ Erro ao executar init-db:', error.message);
+      resolve(); // Continua mesmo com erro
+    });
+  });
+}
+
 // Inicializar servidor
 async function startServer() {
   try {
+    // Primeiro inicializa o banco
+    await initDatabase();
+    
+    // Depois conecta
     await database.connect();
     
     app.listen(PORT, () => {
