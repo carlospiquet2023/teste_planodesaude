@@ -18,6 +18,8 @@ let simulationsChart = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
+    const loginContainer = document.getElementById('loginContainer');
+    const dashboard = document.getElementById('dashboard');
     
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -43,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     sessionStorage.setItem('adminToken', data.token);
                     sessionStorage.setItem('adminLoggedIn', 'true');
                     
-                    document.getElementById('loginContainer').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
+                    if (loginContainer) loginContainer.style.display = 'none';
+                    if (dashboard) dashboard.style.display = 'block';
                     
                     loadDashboard();
                 } else {
