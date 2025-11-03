@@ -1,0 +1,219 @@
+{
+  "assistente": {
+    "nome": "IARA",
+    "descricao": "Inteligência Artificial para Recomendação de Assistência",
+    "avatar": "https://i.pravatar.cc/200?img=10",
+    "saudacao": "Olá! 👋 Eu sou a IARA, sua assistente inteligente de planos de saúde!"
+  },
+  "operadoras": [
+    {
+      "id": "amil",
+      "nome": "Amil",
+      "registro_ans": "326305",
+      "rating": 4.5,
+      "cobertura_nacional": true,
+      "rede_credenciada": 50000,
+      "telefone": "4020-4004",
+      "site": "https://www.amil.com.br"
+    },
+    {
+      "id": "bradesco",
+      "nome": "Bradesco Saúde",
+      "registro_ans": "005711",
+      "rating": 4.3,
+      "cobertura_nacional": true,
+      "rede_credenciada": 45000,
+      "telefone": "0800-701-3222",
+      "site": "https://www.bradescoseguros.com.br/saude"
+    },
+    {
+      "id": "sulamerica",
+      "nome": "SulAmérica",
+      "registro_ans": "003549",
+      "rating": 4.6,
+      "cobertura_nacional": true,
+      "rede_credenciada": 55000,
+      "telefone": "4004-4400",
+      "site": "https://www.sulamericaseguros.com.br"
+    },
+    {
+      "id": "unimed",
+      "nome": "Unimed",
+      "registro_ans": "diversos",
+      "rating": 4.4,
+      "cobertura_nacional": true,
+      "rede_credenciada": 110000,
+      "telefone": "0800-019-8000",
+      "site": "https://www.unimed.coop.br"
+    },
+    {
+      "id": "notredame",
+      "nome": "Notre Dame Intermédica",
+      "registro_ans": "359661",
+      "rating": 4.2,
+      "cobertura_nacional": true,
+      "rede_credenciada": 70000,
+      "telefone": "0800-708-2000",
+      "site": "https://www.gndi.com.br"
+    }
+  ],
+  "tipos_plano": {
+    "individual": {
+      "nome": "Plano Individual",
+      "descricao": "Ideal para quem busca cobertura pessoal",
+      "caracteristicas": [
+        "Portabilidade de carências",
+        "Livre escolha de médicos e hospitais na rede",
+        "Cobertura obrigatória ANS",
+        "Reajuste por faixa etária"
+      ]
+    },
+    "familiar": {
+      "nome": "Plano Familiar",
+      "descricao": "Proteja toda sua família com economia",
+      "caracteristicas": [
+        "Desconto progressivo por dependente",
+        "Mesma rede para todos os membros",
+        "Gestão centralizada",
+        "Economia de até 30% vs planos individuais"
+      ]
+    },
+    "empresarial": {
+      "nome": "Plano Empresarial",
+      "descricao": "Benefício para sua empresa",
+      "caracteristicas": [
+        "A partir de 2 vidas",
+        "Coparticipação opcional",
+        "Sem carência em muitos casos",
+        "Reajuste anual por sinistralidade"
+      ]
+    }
+  },
+  "coberturas": {
+    "ambulatorial": {
+      "nome": "Cobertura Ambulatorial",
+      "inclui": [
+        "Consultas médicas",
+        "Exames laboratoriais",
+        "Exames de imagem simples",
+        "Tratamentos ambulatoriais",
+        "Pequenas cirurgias"
+      ]
+    },
+    "hospitalar": {
+      "nome": "Cobertura Hospitalar",
+      "inclui": [
+        "Internações clínicas",
+        "Cirurgias de média/alta complexidade",
+        "UTI e Semi-intensiva",
+        "Medicamentos durante internação",
+        "Honorários médicos"
+      ]
+    },
+    "obstetrica": {
+      "nome": "Cobertura Obstétrica",
+      "inclui": [
+        "Pré-natal completo",
+        "Parto normal ou cesárea",
+        "Assistência ao recém-nascido",
+        "Internação mãe e bebê",
+        "Ultrassonografias obstétricas"
+      ]
+    },
+    "odontologica": {
+      "nome": "Cobertura Odontológica",
+      "inclui": [
+        "Consultas odontológicas",
+        "Limpeza e prevenção",
+        "Restaurações",
+        "Extrações simples",
+        "Tratamento de canal"
+      ]
+    }
+  },
+  "faixas_etarias": [
+    { "idade_min": 0, "idade_max": 18, "multiplicador": 1.0, "descricao": "Criança/Adolescente" },
+    { "idade_min": 19, "idade_max": 23, "multiplicador": 1.2, "descricao": "Jovem Adulto" },
+    { "idade_min": 24, "idade_max": 28, "multiplicador": 1.4, "descricao": "Adulto Jovem" },
+    { "idade_min": 29, "idade_max": 33, "multiplicador": 1.6, "descricao": "Adulto" },
+    { "idade_min": 34, "idade_max": 38, "multiplicador": 1.9, "descricao": "Adulto" },
+    { "idade_min": 39, "idade_max": 43, "multiplicador": 2.3, "descricao": "Adulto Maduro" },
+    { "idade_min": 44, "idade_max": 48, "multiplicador": 2.8, "descricao": "Adulto Maduro" },
+    { "idade_min": 49, "idade_max": 53, "multiplicador": 3.5, "descricao": "Meia Idade" },
+    { "idade_min": 54, "idade_max": 58, "multiplicador": 4.5, "descricao": "Sênior" },
+    { "idade_min": 59, "idade_max": 120, "multiplicador": 6.0, "descricao": "Idoso" }
+  ],
+  "precos_base": {
+    "basico_ambulatorial": {
+      "valor_base": 180.00,
+      "descricao": "Plano Básico - Apenas Ambulatorial",
+      "acomodacao": "Enfermaria",
+      "operadoras": ["amil", "bradesco", "sulamerica", "unimed"]
+    },
+    "essencial_completo": {
+      "valor_base": 320.00,
+      "descricao": "Plano Essencial - Ambulatorial + Hospitalar",
+      "acomodacao": "Enfermaria",
+      "operadoras": ["amil", "bradesco", "sulamerica", "unimed", "notredame"]
+    },
+    "premium_apartamento": {
+      "valor_base": 580.00,
+      "descricao": "Plano Premium - Completo + Apartamento",
+      "acomodacao": "Apartamento",
+      "operadoras": ["amil", "bradesco", "sulamerica", "unimed", "notredame"]
+    },
+    "top_executivo": {
+      "valor_base": 950.00,
+      "descricao": "Plano Top - Executivo com Odonto",
+      "acomodacao": "Apartamento Luxo",
+      "operadoras": ["sulamerica", "unimed", "notredame"]
+    }
+  },
+  "descontos": {
+    "familia_2_vidas": 0.10,
+    "familia_3_vidas": 0.15,
+    "familia_4_mais_vidas": 0.20,
+    "promocao_atual": 0.15,
+    "adesao_online": 0.05
+  },
+  "perguntas_frequentes": [
+    {
+      "categoria": "carencias",
+      "pergunta": "Qual o prazo de carência?",
+      "resposta": "Normalmente 24h para urgência/emergência, 30 dias para consultas, 180 dias para partos e 24 meses para doenças preexistentes."
+    },
+    {
+      "categoria": "cobertura",
+      "pergunta": "O que está coberto?",
+      "resposta": "Todos os planos cobrem o Rol de Procedimentos da ANS: consultas, exames, internações, cirurgias, partos e tratamentos."
+    },
+    {
+      "categoria": "preco",
+      "pergunta": "Por que o preço varia por idade?",
+      "resposta": "A ANS permite reajuste por faixa etária. Pessoas mais velhas estatisticamente usam mais o plano, por isso o valor é proporcional."
+    },
+    {
+      "categoria": "portabilidade",
+      "pergunta": "Posso trazer meu plano atual?",
+      "resposta": "Sim! Com a portabilidade você mantém as carências já cumpridas no plano anterior."
+    },
+    {
+      "categoria": "reembolso",
+      "pergunta": "Existe reembolso?",
+      "resposta": "Sim, muitos planos oferecem reembolso para consultas e procedimentos fora da rede credenciada, conforme tabela."
+    }
+  ],
+  "palavras_chave_qualificacao": {
+    "urgencia_alta": ["urgente", "imediato", "agora", "hoje", "rápido", "preciso"],
+    "interesse_forte": ["quero", "preciso", "contratar", "fechar", "decidido"],
+    "comparacao": ["comparar", "diferença", "melhor", "opções", "qual"],
+    "preco_sensivel": ["barato", "desconto", "promoção", "economia", "valor"],
+    "qualidade": ["melhor", "top", "premium", "executivo", "vip"]
+  },
+  "avisos_legais": {
+    "simulacao": "⚠️ IMPORTANTE: Esta é uma SIMULAÇÃO baseada em valores médios de mercado. Os valores REAIS podem variar para MAIS ou para MENOS dependendo de: estado de residência, histórico médico, forma de pagamento e condições comerciais da operadora no momento da contratação.",
+    "ans": "✅ Todos os planos são regulamentados pela ANS (Agência Nacional de Saúde Suplementar).",
+    "contrato": "📋 Os valores finais serão confirmados após análise de proposta pela operadora escolhida.",
+    "validade": "⏰ Valores e condições válidos para contratações realizadas em até 48 horas."
+  }
+}

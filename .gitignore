@@ -1,0 +1,46 @@
+# Dependências
+node_modules/
+package-lock.json
+
+# Ambiente
+.env
+.env.local
+.env.production
+
+# Banco de dados
+*.db
+*.db-journal
+database/*.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos temporários
+*.tmp
+*.temp
+.cache/
+
+# Backups e deprecated
+*.bak
+*.deprecated
+*.old
+
+# Build
+dist/
+build/

@@ -1,0 +1,24 @@
+{
+  "name": "vendas-plano-sistema",
+  "version": "1.0.0",
+  "description": "Sistema completo de vendas de planos de saúde com chat inteligente",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "cd server && npm install && npm start",
+    "dev": "cd server && npm run dev",
+    "init-db": "cd server && npm run init-db",
+    "postinstall": "cd server && npm install"
+  },
+  "keywords": [
+    "vendas",
+    "planos-saude",
+    "chat-inteligente",
+    "iara"
+  ],
+  "author": "VendaPlano",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
