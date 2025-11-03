@@ -43,10 +43,16 @@ app.use(securityHeaders);
 // CORS configurado de forma segura
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000'];
+    const allowedOrigins = process.env.CORS_ORIGIN?.split(',') || [
+      'http://localhost:3000',
+      'https://teste-planodesaude.onrender.com'
+    ];
     
     // Permite requisições sem origin (mobile apps, Postman, etc.)
-    if (!origin) return callback(null, true);
+    // E permite mesma origem em produção
+    if (!origin || origin.includes('onrender.com')) {
+      return callback(null, true);
+    }
     
     if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
       callback(null, true);
