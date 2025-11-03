@@ -18,4 +18,4 @@ echo "🗄️  Inicializando banco de dados..."
 npm run init-db
 
 echo "✅ Iniciando servidor..."
-npm start
+node server.js
