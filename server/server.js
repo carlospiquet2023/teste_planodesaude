@@ -31,6 +31,14 @@ const app = express();
 const PORT = process.env.PORT || 10000; // Render usa 10000 por padrão
 
 // ============================================
+// ⚙️ CONFIGURAÇÕES BÁSICAS
+// ============================================
+
+// Confiar em proxy reverso (necessário para Render, Heroku, etc.)
+// Permite identificar corretamente o IP do cliente para rate limiting
+app.set('trust proxy', 1);
+
+// ============================================
 // 🛡️ CAMADA DE SEGURANÇA
 // ============================================
 

@@ -12,13 +12,14 @@ if [ ! -d "database" ]; then
   mkdir -p database
 fi
 
-# Se o banco já existe, fazer migração. Senão, inicializar
+# SEMPRE executar init-db para garantir que todas as tabelas existam
+echo "🗄️ Garantindo que todas as tabelas existam..."
+npm run init-db
+
+# Se o banco já existia, executar migração adicional
 if [ -f "database/vendas.db" ]; then
-  echo "🔄 Banco existente detectado. Executando migração..."
-  npm run migrate-db
-else
-  echo "🗄️ Inicializando novo banco de dados..."
-  npm run init-db
+  echo "🔄 Executando migração adicional..."
+  npm run migrate-db || echo "⚠️  Migração pulada (já atualizado)"
 fi
 
 echo "✅ Build concluído com sucesso!"

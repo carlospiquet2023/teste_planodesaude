@@ -3,6 +3,8 @@
 ## ❌ Problema Atual
 - Erro 500 no login
 - Banco de dados antigo sem colunas necessárias
+- Tabelas faltando (conversations, messages, etc.)
+- Trust proxy não configurado (rate limiting)
 - Cache do Render com código antigo
 
 ## ✅ SOLUÇÃO RÁPIDA (5 minutos)
@@ -25,7 +27,26 @@ cd server
 node -e "const db = require('./config/database'); db.connect().then(() => db.all('PRAGMA table_info(admins)')).then(r => console.log(JSON.stringify(r, null, 2))).then(() => db.close())"
 
 # 3. Se não tiver as colunas last_login e updated_at, adicionar:
-node -e "const db = require('./config/database'); db.connect().then(() => db.run('ALTER TABLE admins ADD COLUMN last_login DATETIME')).then(() => db.run('ALTER TABLE admins ADD COLUMN updated_at DATETIME')).then(() => console.log('Colunas adicionadas!')).catch(e => console.log(e.message)).then(() => db.close())"
+node -e "const db = require('./config/database'); db.connect().then(() => db.run('ALTER TABLE admins ADD COLUMN last_login DATETIME')).then(() => db.run('ALTER TABLE admins ADD COLUMN updated_at DATETIME')).then(() => console.log('#### Comando 2: Resetar banco completo (RECOMENDADO)
+```bash
+npm run reset-db
+```
+
+**Isso irá:**
+- Deletar banco antigo
+- Criar todas as tabelas do zero
+- Criar admin com credenciais padrão
+- Garantir estrutura 100% correta
+
+**Resultado esperado:**
+```
+🗑️  Deletando banco existente...
+✅ Banco deletado
+🆕 Criando novo banco de dados...
+✅ Tabelas criadas com sucesso!
+✅ Usuário admin criado!
+✅ Banco de dados resetado com sucesso!
+```')).catch(e => console.log(e.message)).then(() => db.close())"
 
 # 4. Verificar novamente
 node -e "const db = require('./config/database'); db.connect().then(() => db.all('PRAGMA table_info(admins)')).then(r => console.log(JSON.stringify(r, null, 2))).then(() => db.close())"
