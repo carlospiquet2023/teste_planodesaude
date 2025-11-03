@@ -8,6 +8,7 @@
     "dev": "nodemon server.js",
     "init-db": "node scripts/init-db.js",
     "migrate-db": "node scripts/migrate-db.js",
+    "reset-db": "chmod +x reset-db.sh && ./reset-db.sh",
     "diagnose": "node diagnose.js",
     "setup": "node scripts/init-db.js && node server.js"
   },

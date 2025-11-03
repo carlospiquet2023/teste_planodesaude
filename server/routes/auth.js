@@ -84,12 +84,16 @@ router.post('/login', loginLimiter, authValidation.login, async (req, res) => {
   } catch (error) {
     securityLogger.suspiciousActivity('Erro no login', {
       error: error.message,
+      stack: error.stack,
       ip: req.ip
     });
     console.error('❌ Erro no login:', error);
+    console.error('Stack trace:', error.stack);
+    
     res.status(500).json({ 
       success: false,
-      error: 'Erro interno ao processar login' 
+      error: 'Erro interno ao processar login',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
