@@ -28,7 +28,7 @@ const dashboardRoutes = require('./routes/dashboard');
 const contentRoutes = require('./routes/content');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000; // Render usa 10000 por padrão
 
 // ============================================
 // 🛡️ CAMADA DE SEGURANÇA
@@ -86,7 +86,16 @@ app.use(detectXss);
 app.use('/api/', apiLimiter);
 
 // Servir arquivos estáticos (frontend)
-app.use(express.static(path.join(__dirname, '../')));
+const staticPath = path.join(__dirname, '../');
+console.log(`📁 Servindo arquivos estáticos de: ${staticPath}`);
+app.use(express.static(staticPath, {
+  maxAge: '1d', // Cache de 1 dia para assets
+  etag: true
+}));
+
+// Assets específicos
+app.use('/assets', express.static(path.join(__dirname, '../assets')));
+app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // Rotas da API
 app.use('/api/auth', authRoutes);
@@ -111,8 +120,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
-// Rota admin - serve o dashboard PRO (painel unificado)
+// Rota admin - serve o dashboard PRO (com e sem barra final)
 app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../admin/index.html'));
+});
+
+app.get('/admin/', (req, res) => {
   res.sendFile(path.join(__dirname, '../admin/index.html'));
 });
 
