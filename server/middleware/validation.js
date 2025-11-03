@@ -44,8 +44,8 @@ const authValidation = {
       .isLength({ min: 3, max: 50 })
       .withMessage('Username deve ter entre 3 e 50 caracteres')
       .matches(/^[a-zA-Z0-9_.-]+$/)
-      .withMessage('Username contém caracteres inválidos')
-      .escape(),
+      .withMessage('Username contém caracteres inválidos'),
+    // .escape() removido pois estava interferindo no login
     
     body('password')
       .isLength({ min: 3, max: 100 })

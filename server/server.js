@@ -129,23 +129,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Rota de debug - estrutura do banco (REMOVER EM PRODUÇÃO)
-app.get('/api/debug/db-structure', async (req, res) => {
-  try {
-    const tableInfo = await database.all('PRAGMA table_info(admins)');
-    const adminCount = await database.get('SELECT COUNT(*) as count FROM admins');
-    res.json({
-      success: true,
-      columns: tableInfo,
-      adminCount: adminCount.count
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
-});
+// Rota de debug removida por questões de segurança
+// Usar diagnose.js ao invés: node diagnose.js
 
 // Rota principal - serve o index.html
 app.get('/', (req, res) => {
