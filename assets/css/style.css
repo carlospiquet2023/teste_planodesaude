@@ -1322,12 +1322,27 @@ button {
 
 .message-avatar {
     flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
 }
 
 .message-avatar img {
-    width: 40px;
-    height: 40px;
+    width: 40px !important;
+    height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
     border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Específico para mensagens do bot */
+.chat-message.bot .message-avatar img {
+    width: 40px !important;
+    height: 40px !important;
 }
 
 .message-bubble {
