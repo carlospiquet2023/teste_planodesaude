@@ -87,8 +87,13 @@ router.post('/login', loginLimiter, authValidation.login, async (req, res) => {
       stack: error.stack,
       ip: req.ip
     });
-    console.error('❌ Erro no login:', error);
-    console.error('Stack trace:', error.stack);
+    
+    const { logger } = require('../middleware/logger');
+    logger.error('❌ Erro no login:', {
+      error: error.message,
+      stack: error.stack,
+      ip: req.ip
+    });
     
     res.status(500).json({ 
       success: false,

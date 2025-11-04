@@ -517,3 +517,351 @@ tbody tr:hover {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* ==========================================
+   📱 RESPONSIVIDADE MOBILE
+   ========================================== */
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.mobile-menu-toggle i {
+    font-size: 24px;
+    color: var(--primary);
+}
+
+/* Tablets (≤ 1024px) */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 240px;
+    }
+    
+    .main-content {
+        margin-left: 240px;
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablets/Mobile (≤ 768px) */
+@media (max-width: 768px) {
+    /* Show mobile menu toggle */
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    /* Sidebar mobile */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        width: 280px;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* Add overlay when sidebar is open */
+    .sidebar.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 280px;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: -1;
+    }
+    
+    /* Main content without margin on mobile */
+    .main-content {
+        margin-left: 0;
+        padding: 80px 15px 20px;
+    }
+    
+    /* Top bar adjustments */
+    .top-bar {
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .page-title {
+        font-size: 22px;
+    }
+    
+    /* Stats grid */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 20px;
+    }
+    
+    .stat-value {
+        font-size: 28px;
+    }
+    
+    /* Charts */
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .chart-card {
+        padding: 20px;
+    }
+    
+    canvas {
+        max-height: 250px;
+    }
+    
+    /* Tables */
+    .table-card {
+        overflow-x: auto;
+    }
+    
+    .table-header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .table-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    table {
+        min-width: 600px;
+    }
+    
+    th, td {
+        padding: 12px 15px;
+        font-size: 13px;
+    }
+    
+    /* Editor */
+    .editor-card {
+        padding: 20px;
+    }
+    
+    /* Login */
+    .login-box {
+        padding: 30px 25px;
+        margin: 0 15px;
+    }
+    
+    .login-logo i {
+        font-size: 48px;
+    }
+    
+    .login-box h1 {
+        font-size: 26px;
+    }
+}
+
+/* Small Mobile (≤ 480px) */
+@media (max-width: 480px) {
+    /* Further reduce padding */
+    .main-content {
+        padding: 70px 10px 15px;
+    }
+    
+    .top-bar {
+        padding: 12px 15px;
+        border-radius: 12px;
+    }
+    
+    .page-title {
+        font-size: 20px;
+    }
+    
+    .page-subtitle {
+        font-size: 13px;
+    }
+    
+    /* Stats */
+    .stat-card {
+        padding: 18px;
+    }
+    
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+    
+    .stat-value {
+        font-size: 24px;
+    }
+    
+    .stat-label {
+        font-size: 13px;
+    }
+    
+    /* Charts */
+    .chart-card {
+        padding: 18px;
+    }
+    
+    .chart-title {
+        font-size: 16px;
+    }
+    
+    canvas {
+        max-height: 200px;
+    }
+    
+    /* Tables */
+    .table-header {
+        padding: 15px;
+    }
+    
+    .table-title {
+        font-size: 16px;
+    }
+    
+    .btn {
+        padding: 8px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    
+    th, td {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+    
+    /* Forms */
+    .form-field label {
+        font-size: 13px;
+    }
+    
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+        padding: 10px;
+        font-size: 13px;
+    }
+    
+    /* Login */
+    .login-box {
+        padding: 25px 20px;
+    }
+    
+    .login-logo i {
+        font-size: 40px;
+    }
+    
+    .login-box h1 {
+        font-size: 22px;
+    }
+    
+    .login-subtitle {
+        font-size: 13px;
+        margin-bottom: 30px;
+    }
+    
+    .form-group input {
+        padding: 12px 12px 12px 40px;
+        font-size: 14px;
+    }
+    
+    .btn-login {
+        padding: 14px;
+        font-size: 15px;
+    }
+    
+    /* Sidebar on small screens */
+    .sidebar-header {
+        padding: 20px;
+    }
+    
+    .sidebar-logo {
+        font-size: 20px;
+    }
+    
+    .menu-item {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+    
+    .sidebar-footer {
+        padding: 15px 20px;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .btn-logout {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+    .sidebar {
+        overflow-y: auto;
+    }
+    
+    .sidebar-footer {
+        position: relative;
+    }
+    
+    .main-content {
+        padding-top: 70px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar,
+    .mobile-menu-toggle,
+    .btn-logout,
+    .table-actions {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .table-card,
+    .chart-card,
+    .stat-card {
+        break-inside: avoid;
+    }
+}

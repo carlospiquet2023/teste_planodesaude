@@ -1,0 +1,65 @@
+{
+  "name": "VendaPlano CI/CD",
+  "on": {
+    "push": {
+      "branches": ["main", "develop"]
+    },
+    "pull_request": {
+      "branches": ["main"]
+    }
+  },
+  "jobs": {
+    "test": {
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout código",
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3",
+          "with": {
+            "node-version": "18.x"
+          }
+        },
+        {
+          "name": "Instalar dependências",
+          "run": "cd server && npm ci"
+        },
+        {
+          "name": "Executar testes",
+          "run": "cd server && npm test"
+        },
+        {
+          "name": "Verificar cobertura",
+          "run": "cd server && npm run test:coverage"
+        }
+      ]
+    },
+    "lint": {
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout código",
+          "uses": "actions/checkout@v3"
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3",
+          "with": {
+            "node-version": "18.x"
+          }
+        },
+        {
+          "name": "Instalar dependências",
+          "run": "cd server && npm ci"
+        },
+        {
+          "name": "Executar linter",
+          "run": "cd server && npm run lint || echo 'Linter não configurado'"
+        }
+      ]
+    }
+  }
+}

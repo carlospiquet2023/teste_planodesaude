@@ -7,7 +7,31 @@ const authMiddleware = require('../middleware/auth');
 // 📄 GERENCIAMENTO DE CONTEÚDO DO SITE
 // ============================================
 
-// Obter todo o conteúdo editável do site
+// 🌐 Obter conteúdo público (SEM autenticação - para o site)
+router.get('/public', async (req, res) => {
+  try {
+    const db = await database.connect();
+    
+    const content = await db.all(`
+      SELECT section, element_key, element_type, value, description 
+      FROM site_content 
+      ORDER BY section, element_key
+    `);
+    
+    res.json({
+      success: true,
+      content: content
+    });
+  } catch (error) {
+    console.error('Erro ao buscar conteúdo público:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erro ao buscar conteúdo do site'
+    });
+  }
+});
+
+// Obter todo o conteúdo editável do site (protegido)
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const db = await database.connect();

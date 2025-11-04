@@ -3,6 +3,19 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
 
+// Importar logger apenas quando necessário
+const getLogger = () => {
+  try {
+    return require('../middleware/logger').logger;
+  } catch {
+    return {
+      info: console.log.bind(console),
+      error: console.error.bind(console),
+      warn: console.warn.bind(console)
+    };
+  }
+};
+
 const dbPath = path.resolve(__dirname, '..', process.env.DB_PATH || './database/vendas.db');
 const dbDir = path.dirname(dbPath);
 
@@ -13,19 +26,21 @@ class Database {
 
   connect() {
     return new Promise((resolve, reject) => {
+      const logger = getLogger();
+      
       // Garante que o diretório existe antes de criar o banco
       if (!fs.existsSync(dbDir)) {
-        console.log(`Criando diretório do banco de dados: ${dbDir}`);
+        logger.info(`Criando diretório do banco de dados: ${dbDir}`);
         fs.mkdirSync(dbDir, { recursive: true });
       }
 
       this.db = new sqlite3.Database(dbPath, (err) => {
         if (err) {
-          console.error('Erro ao conectar ao banco de dados:', err);
+          logger.error('Erro ao conectar ao banco de dados:', { error: err.message });
           reject(err);
         } else {
-          console.log('✅ Conectado ao banco de dados SQLite');
-          console.log(`📁 Caminho do banco: ${dbPath}`);
+          logger.info('✅ Conectado ao banco de dados SQLite');
+          logger.info(`📁 Caminho do banco: ${dbPath}`);
           this.db.run('PRAGMA foreign_keys = ON');
           resolve(this.db);
         }
@@ -71,11 +86,12 @@ class Database {
 
   close() {
     return new Promise((resolve, reject) => {
+      const logger = getLogger();
       this.db.close((err) => {
         if (err) {
           reject(err);
         } else {
-          console.log('Conexão com banco de dados fechada');
+          logger.info('Conexão com banco de dados fechada');
           resolve();
         }
       });

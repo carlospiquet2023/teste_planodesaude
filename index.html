@@ -23,7 +23,7 @@
     <header class="header-premium">
         <div class="header-alert pulsing">
             <i class="fas fa-bolt"></i>
-            <span><strong>ATENÇÃO:</strong> Apenas <span class="countdown-number" id="spots">7</span> vagas disponíveis HOJE com <strong>40% OFF</strong></span>
+            <span><strong>ATENÇÃO:</strong> Apenas <span class="countdown-number" id="spots" data-content="alert_spots">7</span> vagas disponíveis HOJE com <strong data-content="alert_discount">40% OFF</strong></span>
             <i class="fas fa-bolt"></i>
         </div>
         
@@ -48,7 +48,7 @@
                     </a>
                     <div class="phone-premium">
                         <i class="fas fa-phone-volume"></i>
-                        <span>(11) 9 9999-9999</span>
+                        <span data-setting="phone">(11) 9 9999-9999</span>
                     </div>
                 </div>
             </div>
@@ -66,17 +66,17 @@
             <div class="hero-left slide-in-left">
                 <div class="hero-badge floating">
                     <i class="fas fa-star"></i>
-                    <span>Mais de <strong>50.000</strong> vidas PROTEGIDAS</span>
+                    <span data-content="hero_badge">Mais de <strong>50.000</strong> vidas PROTEGIDAS</span>
                 </div>
                 
                 <h1 class="hero-title hypnotic-text">
-                    <span class="title-line-1">IMAGINE</span>
-                    <span class="title-line-2">Sua Família</span>
-                    <span class="title-line-3 highlight-text glow">COMPLETAMENTE</span>
-                    <span class="title-line-4">PROTEGIDA</span>
+                    <span class="title-line-1" data-content="hero_title_line1">IMAGINE</span>
+                    <span class="title-line-2" data-content="hero_title_line2">Sua Família</span>
+                    <span class="title-line-3 highlight-text glow" data-content="hero_title_line3">COMPLETAMENTE</span>
+                    <span class="title-line-4" data-content="hero_title_line4">PROTEGIDA</span>
                 </h1>
                 
-                <p class="hero-subtitle fade-in-delay">
+                <p class="hero-subtitle fade-in-delay" data-content="hero_subtitle">
                     <strong>PARE</strong> de adiar o que é <span class="underline-gradient">ESSENCIAL</span>...<br>
                     <strong>SINTA</strong> a tranquilidade de ter o <span class="highlight-yellow">MELHOR atendimento</span>...<br>
                     <strong>GARANTA</strong> proteção <span class="highlight-green">IMEDIATA</span> para quem você <strong>AMA</strong>
@@ -85,19 +85,19 @@
                 <div class="hero-benefits">
                     <div class="benefit-item zoom-in">
                         <i class="fas fa-check-circle"></i>
-                        <span>✅ <strong>Aprovação</strong> em <span class="highlight-time">24h</span></span>
+                        <span data-content="benefit_1">✅ <strong>Aprovação</strong> em <span class="highlight-time">24h</span></span>
                     </div>
                     <div class="benefit-item zoom-in" style="animation-delay: 0.1s">
                         <i class="fas fa-check-circle"></i>
-                        <span>💰 <strong>Economia</strong> de até <span class="highlight-money">40%</span></span>
+                        <span data-content="benefit_2">💰 <strong>Economia</strong> de até <span class="highlight-money">40%</span></span>
                     </div>
                     <div class="benefit-item zoom-in" style="animation-delay: 0.2s">
                         <i class="fas fa-check-circle"></i>
-                        <span>🏥 <strong>Cobertura</strong> COMPLETA + VIP</span>
+                        <span data-content="benefit_3">🏥 <strong>Cobertura</strong> COMPLETA + VIP</span>
                     </div>
                     <div class="benefit-item zoom-in" style="animation-delay: 0.3s">
                         <i class="fas fa-check-circle"></i>
-                        <span>🤝 <strong>Atendimento</strong> 24h/7dias</span>
+                        <span data-content="benefit_4">🤝 <strong>Atendimento</strong> 24h/7dias</span>
                     </div>
                 </div>
                 
@@ -795,6 +795,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="assets/js/content-loader.js"></script>
     <script src="assets/js/backend-integration.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/simulator.js"></script>

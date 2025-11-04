@@ -10,7 +10,12 @@
     "migrate-db": "node scripts/migrate-db.js",
     "reset-db": "chmod +x reset-db.sh && ./reset-db.sh",
     "diagnose": "node diagnose.js",
-    "setup": "node scripts/init-db.js && node server.js"
+    "setup": "node scripts/init-db.js && node server.js",
+    "test": "jest --config tests/jest.config.js",
+    "test:watch": "jest --config tests/jest.config.js --watch",
+    "test:coverage": "jest --config tests/jest.config.js --coverage",
+    "test:unit": "jest --config tests/jest.config.js tests/unit",
+    "test:integration": "jest --config tests/jest.config.js tests/integration"
   },
   "keywords": [
     "api",
@@ -36,6 +41,9 @@
     "winston": "^3.18.3"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "@types/jest": "^29.5.11"
   }
 }

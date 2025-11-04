@@ -36,7 +36,12 @@ const helmetConfig = helmet({
         "https://cdnjs.cloudflare.com"
       ],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "http://localhost:3000", "https://api.vendaplano.com"],
+      connectSrc: [
+        "'self'", 
+        "http://localhost:3000", 
+        "https://api.vendaplano.com",
+        "https://cdn.jsdelivr.net"
+      ],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],
       upgradeInsecureRequests: []

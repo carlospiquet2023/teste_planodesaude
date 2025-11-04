@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
+// Validar variáveis de ambiente ANTES de tudo
+const { validateEnvironment } = require('./utils/env-validator');
+validateEnvironment();
+
 const database = require('./config/database');
 
 // 🛡️ Middlewares de Segurança
@@ -26,6 +30,8 @@ const messageRoutes = require('./routes/messages');
 const simulationRoutes = require('./routes/simulations');
 const dashboardRoutes = require('./routes/dashboard');
 const contentRoutes = require('./routes/content');
+const pricingRoutes = require('./routes/pricing');
+const settingsRoutes = require('./routes/settings');
 
 const app = express();
 const PORT = process.env.PORT || 10000; // Render usa 10000 por padrão
@@ -101,7 +107,7 @@ app.use('/api/', apiLimiter);
 
 // Servir arquivos estáticos (frontend)
 const staticPath = path.join(__dirname, '../');
-console.log(`📁 Servindo arquivos estáticos de: ${staticPath}`);
+logger.info(`📁 Servindo arquivos estáticos de: ${staticPath}`);
 app.use(express.static(staticPath, {
   maxAge: '1d', // Cache de 1 dia para assets
   etag: true
@@ -119,14 +125,24 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/simulations', simulationRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/pricing', pricingRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // Rota de health check
-app.get('/api/health', (req, res) => {
-  res.json({
-    success: true,
-    message: 'API funcionando corretamente',
-    timestamp: new Date().toISOString()
-  });
+const HealthCheck = require('./utils/health-check');
+
+app.get('/api/health', async (req, res) => {
+  const health = await HealthCheck.runSimpleCheck();
+  const statusCode = health.status === 'healthy' ? 200 : 503;
+  res.status(statusCode).json(health);
+});
+
+// Rota de health check detalhada (protegida ou com query param)
+app.get('/api/health/detailed', async (req, res) => {
+  // Opcional: proteger com token ou query param secreto
+  const health = await HealthCheck.runFullCheck();
+  const statusCode = health.status === 'healthy' ? 200 : 503;
+  res.status(statusCode).json(health);
 });
 
 // Rota de debug removida por questões de segurança
@@ -192,7 +208,7 @@ app.use((err, req, res, next) => {
 
 // Inicializar banco de dados
 async function initDatabase() {
-  console.log('🔄 Verificando banco de dados...');
+  logger.info('🔄 Verificando banco de dados...');
   const { spawn } = require('child_process');
   
   return new Promise((resolve, reject) => {
@@ -203,16 +219,16 @@ async function initDatabase() {
     
     initDb.on('close', (code) => {
       if (code === 0) {
-        console.log('✅ Banco de dados verificado/inicializado!');
+        logger.info('✅ Banco de dados verificado/inicializado!');
         resolve();
       } else {
-        console.error('⚠️ Aviso: Erro ao inicializar banco (tentando continuar...)');
+        logger.warn('⚠️ Aviso: Erro ao inicializar banco (tentando continuar...)');
         resolve(); // Continua mesmo com erro
       }
     });
     
     initDb.on('error', (error) => {
-      console.error('⚠️ Erro ao executar init-db:', error.message);
+      logger.error('⚠️ Erro ao executar init-db:', { error: error.message });
       resolve(); // Continua mesmo com erro
     });
   });
@@ -231,27 +247,30 @@ async function startServer() {
       logger.info(`🚀 Servidor rodando na porta ${PORT}`);
       logger.info(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
       logger.info(`🛡️ Segurança ativada: Helmet, Rate Limiting, Sanitização, XSS Protection`);
-      console.log(`\n✅ Servidor iniciado com sucesso!`);
-      console.log(`📡 API disponível em: http://localhost:${PORT}/api`);
-      console.log(`🔐 Admin disponível em: http://localhost:${PORT}/admin\n`);
+      logger.info(`📡 API disponível em: http://localhost:${PORT}/api`);
+      logger.info(`🔐 Admin disponível em: http://localhost:${PORT}/admin`);
     });
   } catch (error) {
-    logger.error('❌ Erro ao iniciar servidor:', error);
-    console.error('Falha ao iniciar servidor:', error);
+    logger.error('❌ Erro ao iniciar servidor:', { error: error.message, stack: error.stack });
     process.exit(1);
   }
 }
 
 // Tratamento de erros não capturados
 process.on('uncaughtException', (error) => {
-  logger.error('Exceção não capturada:', error);
-  console.error('ERRO CRÍTICO - Exceção não capturada:', error);
+  logger.error('ERRO CRÍTICO - Exceção não capturada:', { 
+    error: error.message, 
+    stack: error.stack 
+  });
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
-  logger.error('Promise rejeitada não tratada:', { reason, promise });
-  console.error('ERRO CRÍTICO - Promise rejeitada:', reason);
+  logger.error('ERRO CRÍTICO - Promise rejeitada:', { 
+    reason: reason instanceof Error ? reason.message : reason,
+    stack: reason instanceof Error ? reason.stack : undefined,
+    promise: String(promise)
+  });
 });
 
 // Graceful shutdown
