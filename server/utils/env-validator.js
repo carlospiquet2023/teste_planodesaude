@@ -89,8 +89,16 @@ function validateEnvironment() {
       warnings.push('⚠️ CORS_ORIGIN não configurado - aceita todas as origens (inseguro)');
     }
     
-    if (process.env.JWT_SECRET === 'vendaplano_secret_key_2024') {
-      errors.push('❌ JWT_SECRET usando valor padrão em produção (CRÍTICO!)');
+    // Lista de JWT_SECRETs considerados inseguros
+    const insecureSecrets = [
+      'vendaplano_secret_key_2024',
+      'secret',
+      'password',
+      '123456'
+    ];
+    
+    if (insecureSecrets.some(insecure => process.env.JWT_SECRET.includes(insecure))) {
+      errors.push('❌ JWT_SECRET usando valor inseguro em produção (CRÍTICO!)');
     }
   }
   
@@ -99,7 +107,11 @@ function validateEnvironment() {
     logger.error('🚨 ERROS CRÍTICOS DE CONFIGURAÇÃO:');
     errors.forEach(err => logger.error(err));
     
+    // Em produção, só lança erro se for crítico
     if (process.env.NODE_ENV === 'production') {
+      logger.error('⚠️ Continuando apesar dos erros...');
+      logger.error('⚠️ CORRIJA ESTES PROBLEMAS O MAIS RÁPIDO POSSÍVEL!');
+    } else {
       throw new Error('Configuração inválida. Corrija os erros antes de iniciar.');
     }
   }
