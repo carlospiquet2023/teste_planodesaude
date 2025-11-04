@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="admin-style.css?v=5.0">
+    <link rel="stylesheet" href="admin-style.css?v=3.0">
 </head>
 <body>
     <div id="loginContainer" class="login-container">
@@ -80,10 +80,20 @@
                     <div><h1 class="page-title">Dashboard</h1></div>
                     <button class="btn btn-primary" onclick="refreshDashboard()"><i class="fas fa-sync"></i> Atualizar</button>
                 </div>
+                
+                <!-- Period Selector -->
+                <div class="stats-period-selector">
+                    <button class="period-btn" onclick="changeDashboardPeriod('today')">Hoje</button>
+                    <button class="period-btn active" onclick="changeDashboardPeriod('7days')">7 dias</button>
+                    <button class="period-btn" onclick="changeDashboardPeriod('30days')">30 dias</button>
+                    <button class="period-btn" onclick="changeDashboardPeriod('90days')">90 dias</button>
+                    <button class="period-btn" onclick="changeDashboardPeriod('year')">Este ano</button>
+                </div>
+                
                 <div class="stats-grid" id="statsCards"></div>
                 <div class="charts-grid">
-                    <div class="chart-card"><h3 class="chart-title">Leads</h3><canvas id="leadsChart"></canvas></div>
-                    <div class="chart-card"><h3 class="chart-title">Planos</h3><canvas id="plansChart"></canvas></div>
+                    <div class="chart-card"><h3 class="chart-title">Leads nos Últimos 30 Dias</h3><canvas id="leadsChart"></canvas></div>
+                    <div class="chart-card"><h3 class="chart-title">Distribuição por Planos</h3><canvas id="plansChart"></canvas></div>
                 </div>
                 <div class="table-card">
                     <div class="table-header"><h3 class="table-title">Atividade Recente</h3></div>
@@ -99,9 +109,64 @@
                         <button class="btn btn-primary" onclick="loadLeadsSection()"><i class="fas fa-sync"></i> Atualizar</button>
                     </div>
                 </div>
+                
+                <!-- Search and Filter Bar -->
+                <div class="search-filter-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            placeholder="Buscar por nome, email, telefone, cidade..." 
+                            oninput="searchLeads(this.value)"
+                        >
+                        <button class="clear-search" onclick="document.getElementById('searchInput').value=''; searchLeads('');">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select onchange="filterByStatus(this.value)">
+                            <option value="all">Todos</option>
+                            <option value="novo">Novo</option>
+                            <option value="contato">Em Contato</option>
+                            <option value="interessado">Interessado</option>
+                            <option value="negociacao">Negociação</option>
+                            <option value="fechado">Fechado</option>
+                            <option value="perdido">Perdido</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Por página:</label>
+                        <select onchange="itemsPerPage = parseInt(this.value); currentPage = 1; renderLeadsTable(); renderPagination();">
+                            <option value="10">10</option>
+                            <option value="20" selected>20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                
                 <div class="table-card">
                     <div class="table-header"><h3 class="table-title">Todos os Leads</h3></div>
-                    <div class="table-wrapper"><table><thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Telefone</th><th>Cidade</th><th>Status</th><th>Data</th></tr></thead><tbody id="leadsTable"></tbody></table></div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nome</th>
+                                    <th>Email</th>
+                                    <th>Telefone</th>
+                                    <th>Cidade</th>
+                                    <th>Status</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leadsTable"></tbody>
+                        </table>
+                    </div>
+                    <div id="paginationContainer"></div>
                 </div>
             </div>
 
@@ -135,6 +200,6 @@
             </div>
         </main>
     </div>
-    <script src="admin-pro.js?v=5.0"></script>
+    <script src="admin-pro.js?v=3.0"></script>
 </body>
 </html>

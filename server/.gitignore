@@ -23,3 +23,24 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# ============================================
+# Logs (adicionado automaticamente)
+# ============================================
+logs/*.log
+!logs/.gitkeep
+
+# ============================================
+# Database
+# ============================================
+database/*.db
+database/*.db-shm
+database/*.db-wal
+!database/.gitkeep
+
+# ============================================
+# Cache
+# ============================================
+node_modules/.cache
+.cache
+
