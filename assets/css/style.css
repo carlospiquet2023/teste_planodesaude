@@ -1325,6 +1325,19 @@ button {
     width: 40px;
     height: 40px;
     overflow: hidden;
+    flex-grow: 0;
+}
+
+/* FORÇA o tamanho do avatar - sobrescreve TODOS os outros estilos */
+.chat-message .message-avatar,
+.chat-message.bot .message-avatar,
+.chat-message.user .message-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
 }
 
 .message-avatar img {
@@ -1337,12 +1350,18 @@ button {
     border-radius: 50%;
     object-fit: cover;
     display: block;
+    flex-shrink: 0;
 }
 
 /* Específico para mensagens do bot */
-.chat-message.bot .message-avatar img {
+.chat-message.bot .message-avatar img,
+.chat-message.bot .message-avatar > img {
     width: 40px !important;
     height: 40px !important;
+    max-width: 40px !important;
+    max-height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
 }
 
 .message-bubble {
@@ -2103,6 +2122,29 @@ button {
         right: 20px;
     }
     
+    /* Força tamanho do avatar em tablet também */
+    .message-avatar,
+    .chat-message .message-avatar,
+    .chat-message.bot .message-avatar {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        max-width: 38px !important;
+        max-height: 38px !important;
+    }
+    
+    .message-avatar img,
+    .chat-message .message-avatar img,
+    .chat-message.bot .message-avatar img {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        min-height: 38px !important;
+        max-width: 38px !important;
+        max-height: 38px !important;
+    }
+    
     /* Simulator */
     .simulator-container {
         grid-template-columns: 1fr;
@@ -2161,10 +2203,63 @@ button {
         font-size: 2rem;
     }
     
+    /* Chat Widget Mobile */
     .chat-widget {
-        width: 96%;
-        right: 2%;
-        left: 2%;
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        border-radius: 0;
+    }
+    
+    .chat-button {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.5rem;
+    }
+    
+    .chat-badge {
+        left: -70px;
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+    
+    .message-bubble {
+        max-width: 80%;
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .chat-header {
+        padding: 12px;
+    }
+    
+    .chat-avatar img {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    /* IMPORTANTE: Força tamanho do avatar nas mensagens */
+    .message-avatar {
+        width: 35px !important;
+        height: 35px !important;
+        min-width: 35px !important;
+        min-height: 35px !important;
+        max-width: 35px !important;
+        max-height: 35px !important;
+    }
+    
+    .message-avatar img {
+        width: 35px !important;
+        height: 35px !important;
+        min-width: 35px !important;
+        min-height: 35px !important;
+        max-width: 35px !important;
+        max-height: 35px !important;
     }
     
     .login-box,
